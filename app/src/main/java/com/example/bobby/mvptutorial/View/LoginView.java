@@ -4,5 +4,5 @@ public interface LoginView {
 
     void loginValidation();
     void loginSuccess();
-    void loginError();
+    void saveInPrefs();
 }

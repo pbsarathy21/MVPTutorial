@@ -1,5 +1,6 @@
 package com.example.bobby.mvptutorial.Activitiess;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements LoginView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        loginPresenter = new LoginModel(this);
+        loginPresenter = new LoginModel(getApplicationContext(), this);
 
         username = findViewById(R.id.usename);
         password = findViewById(R.id.password);
@@ -48,10 +49,12 @@ public class MainActivity extends AppCompatActivity implements LoginView {
     @Override
     public void loginSuccess() {
         Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
+
+        startActivity(new Intent(MainActivity.this, RecyclerViewActivity.class));
     }
 
     @Override
-    public void loginError() {
-        Toast.makeText(this, "invalid user", Toast.LENGTH_SHORT).show();
+    public void saveInPrefs() {
+        Toast.makeText(this, "Saved successfully", Toast.LENGTH_SHORT).show();
     }
 }

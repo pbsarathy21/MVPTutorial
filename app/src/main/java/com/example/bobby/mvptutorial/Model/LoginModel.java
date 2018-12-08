@@ -1,15 +1,20 @@
 package com.example.bobby.mvptutorial.Model;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.example.bobby.mvptutorial.Presenter.LoginPresenter;
+import com.example.bobby.mvptutorial.Utilities.MySharedPref;
 import com.example.bobby.mvptutorial.View.LoginView;
 
 public class LoginModel implements LoginPresenter {
 
+    private Context context;
+
     private LoginView loginView;
 
-    public LoginModel(LoginView loginView) {
+    public LoginModel(Context context, LoginView loginView) {
+        this.context = context;
         this.loginView = loginView;
     }
 
@@ -21,14 +26,13 @@ public class LoginModel implements LoginPresenter {
             loginView.loginValidation();
         }
 
-        else if (username.equalsIgnoreCase("bobby") && password.equalsIgnoreCase("bobby"))
-        {
-            loginView.loginSuccess();
-        }
-
         else
         {
-            loginView.loginError();
+            MySharedPref.init(context);
+            MySharedPref.write("Name", username);
+            MySharedPref.write("Password", password);
+            loginView.saveInPrefs();
+            loginView.loginSuccess();
         }
 
     }
